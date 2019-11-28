@@ -1,0 +1,13 @@
+.user-col {
+  flex-grow: 2;
+  min-height: 100vh;
+  border-right: 2px solid white;
+}
+
+.user-name-instance {
+  padding: 10px;
+  background: black;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  cursor: pointer;
+}
