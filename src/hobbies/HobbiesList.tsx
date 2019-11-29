@@ -77,6 +77,10 @@ export class HobbiesList extends React.Component<Props, State> {
   };
 
   render() {
+    const filterHobbyList = (hobbyList: hobbies[], userId: number) => {
+      return hobbyList.filter(hobby => hobby.userId === userId);
+    };
+
     const {
       isHobbiesPanelActive,
       activeUserId: userId,
@@ -84,7 +88,8 @@ export class HobbiesList extends React.Component<Props, State> {
       hobbyList
     } = this.props;
     const { passionLevel, hobbyName, year } = this.state;
-    const { emptyHobbyList } = messages;
+    const { emptyHobbyList, noUserSelected } = messages;
+    const filteredHobbyList = filterHobbyList(hobbyList, userId);
     return (
       <div className="hobbies-col">
         <div
@@ -129,24 +134,24 @@ export class HobbiesList extends React.Component<Props, State> {
           </button>
         </div>
         <div className="hobby-list">
-          {hobbyList.length > 0 ? (
-            hobbyList
-              .filter(hobby => hobby.userId === userId)
-              .map((hobby, index) => (
-                <div key={index} className="hobby-instance">
-                  <span>{hobby.passionLevel}</span>
-                  <span>{hobby.hobbyName}</span>
-                  <span>Since {hobby.year}</span>
-                  <span
-                    className="delete-hobby"
-                    onClick={() => deleteHobby(hobby.hobbyName)}
-                  >
-                    Delete <FontAwesomeIcon icon={faTrashAlt} />
-                  </span>
-                </div>
-              ))
-          ) : (
+          {filteredHobbyList && filteredHobbyList.length > 0 ? (
+            filteredHobbyList.map((hobby, index) => (
+              <div key={index} className="hobby-instance">
+                <span>{hobby.passionLevel}</span>
+                <span>{hobby.hobbyName}</span>
+                <span>Since {hobby.year}</span>
+                <span
+                  className="delete-hobby"
+                  onClick={() => deleteHobby(hobby.hobbyName)}
+                >
+                  Delete <FontAwesomeIcon icon={faTrashAlt} />
+                </span>
+              </div>
+            ))
+          ) : isHobbiesPanelActive ? (
             <EmptyList className="empty-hobby-list" message={emptyHobbyList} />
+          ) : (
+            <EmptyList className="empty-hobby-list" message={noUserSelected} />
           )}
         </div>
       </div>

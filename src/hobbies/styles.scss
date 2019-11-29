@@ -4,7 +4,7 @@
 
 .hobbies-col {
   @extend .col;
-  flex-grow: 3;
+  width: 100%;
 }
 
 .hobby-input-section {
@@ -20,6 +20,7 @@
 }
 
 .hobby-list {
+  @extend .list;
 }
 
 .hobby-instance {

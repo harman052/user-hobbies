@@ -4,8 +4,8 @@
 
 .user-col {
   @extend .col;
+  width: 600px;
   border-right: 4px solid lighten($color-text, 40%);
-  flex-grow: 2;
 }
 
 .user-input-section {
@@ -14,6 +14,10 @@
 
 .user-name-instance {
   @extend .list-item;
+}
+
+.user-list {
+  @extend .list;
 }
 
 .active-user {

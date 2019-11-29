@@ -15,7 +15,6 @@ button {
 
 .col {
   flex-grow: 0;
-  height: 80vh;
 }
 
 .input-section {
@@ -32,6 +31,8 @@ button {
 }
 
 .list {
+  height: 60vh;
+  overflow: auto;
 }
 
 .list-item {
