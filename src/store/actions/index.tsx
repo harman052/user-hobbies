@@ -1,43 +1,16 @@
 import * as actionTypes from "./actionTypes";
-import { user } from "../../types";
-import { hobbies } from "../../types/index";
+import {
+  user,
+  hobby,
+  ActivateHobbiesPanel,
+  AddUser,
+  AddHobby,
+  DeleteHobby,
+  FetchUsers,
+  FetchHobbies,
+  SetActiveUserId
+} from "../../types";
 
-//define action interfaces
-export interface ActivateHobbiesPanel {
-  type: actionTypes.ACTIVATE_HOBBIES_PANEL;
-  payload: boolean;
-}
-
-export interface SetActiveUserId {
-  type: actionTypes.SET_ACTIVE_USER_ID;
-  payload: number;
-}
-
-export interface AddUser {
-  type: actionTypes.ADD_USER;
-  payload: user;
-}
-
-export interface AddHobby {
-  type: actionTypes.ADD_HOBBY;
-  payload: hobbies;
-}
-
-export interface DeleteHobby {
-  type: actionTypes.DELETE_HOBBY;
-  payload: string;
-}
-
-export interface FetchUsers {
-  type: actionTypes.FETCH_USERS;
-  payload: user[];
-}
-export interface FetchHobbies {
-  type: actionTypes.FETCH_HOBBIES;
-  payload: hobbies[];
-}
-
-//define actions
 export const activateHobbiesPanel = (
   activationFlag: boolean
 ): ActivateHobbiesPanel => ({
@@ -55,7 +28,7 @@ export const addUser = (newUser: user): AddUser => ({
   payload: newUser
 });
 
-export const addHobby = (hobby: hobbies): AddHobby => ({
+export const addHobby = (hobby: hobby): AddHobby => ({
   type: actionTypes.ADD_HOBBY,
   payload: hobby
 });
@@ -70,7 +43,7 @@ export const fetchUsers = (userList: user[]): FetchUsers => ({
   payload: userList
 });
 
-export const fetchHobbies = (hobbiesList: hobbies[]): FetchHobbies => ({
+export const fetchHobbies = (hobbiesList: hobby[]): FetchHobbies => ({
   type: actionTypes.FETCH_HOBBIES,
   payload: hobbiesList
 });

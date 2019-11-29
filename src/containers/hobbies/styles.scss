@@ -1,6 +1,6 @@
-@import "../styles/base.scss";
-@import "../styles/mixins.scss";
-@import "../styles/colors.scss";
+@import "../../styles/base.scss";
+@import "../../styles/mixins.scss";
+@import "../../styles/colors.scss";
 
 .hobbies-col {
   @extend .col;
@@ -28,6 +28,9 @@
   cursor: default;
   display: flex;
   justify-content: space-evenly;
+  span {
+    width: 200px;
+  }
 }
 
 .empty-hobby-list {

@@ -1,12 +1,9 @@
 import React from "react";
-import UserList from "./user/UserList";
-import HobbiesList from "./hobbies/HobbiesList";
+import UserList from "../../containers/users/UserList";
+import HobbiesList from "../../containers/hobbies/HobbiesList";
 import "./App.scss";
 
-interface Props {}
-interface State {}
-
-class App extends React.Component<Props, State> {
+class App extends React.Component<{}> {
   render() {
     return (
       <div className="app">

@@ -1,4 +1,4 @@
-import { SetActiveUserId } from "../actions/index";
+import { SetActiveUserId } from "../../types";
 import * as actionTypes from "../actions/actionTypes";
 
 const activeUserId = (state: number = 0, action: SetActiveUserId) => {

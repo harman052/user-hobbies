@@ -1,11 +1,11 @@
-import { AddHobby, DeleteHobby, FetchHobbies } from "../actions/index";
-import { hobbies } from "../../types/index";
+import { AddHobby, DeleteHobby, FetchHobbies, hobby } from "../../types";
 import * as actionTypes from "../actions/actionTypes";
+import messages from "../../config/messages";
 
 const hobbyList = (
-  state: hobbies[] = [],
+  state: hobby[] = [],
   action: AddHobby | DeleteHobby | FetchHobbies
-): hobbies[] => {
+): hobby[] => {
   switch (action.type) {
     case actionTypes.ADD_HOBBY: {
       return [...state, action.payload];
@@ -14,9 +14,7 @@ const hobbyList = (
       return [...action.payload];
     }
     case actionTypes.DELETE_HOBBY: {
-      const userConfirmation = window.confirm(
-        "Are you sure you want to delete hobby?"
-      );
+      const userConfirmation = window.confirm(messages.userConfirmation);
       if (!userConfirmation) {
         return state;
       }
@@ -24,10 +22,8 @@ const hobbyList = (
       const index = stateTemp.findIndex(
         hobby => hobby.hobbyName === action.payload
       );
-      if (index > -1) {
-        stateTemp.splice(index, 1);
-        return [...stateTemp];
-      }
+      stateTemp.splice(index, 1);
+      return [...stateTemp];
     }
     default: {
       return state;

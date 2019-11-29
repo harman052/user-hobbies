@@ -2,19 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faSnowboarding } from "@fortawesome/free-solid-svg-icons";
-import EmptyList from "../components/EmptyList";
-import messages from "../config/messages";
-import { MyStore, hobbies } from "../types/index";
-import { addHobby, deleteHobby, fetchHobbies } from "../store/actions/index";
-import getData from "../api/apiUtils";
+import EmptyList from "../../components/DisplayMessage/DisplayMessage";
+import messages from "../../config/messages";
+import { Store, hobby } from "../../types";
+import { addHobby, deleteHobby, fetchHobbies } from "../../store/actions";
+import getData from "../../api/apiUtils";
 import "./styles.scss";
 
 interface Props {
   isHobbiesPanelActive: boolean;
   activeUserId: number;
-  addHobby: (hobbies: hobbies) => void;
-  fetchHobbies: (hobbyList: hobbies[]) => void;
-  hobbyList: hobbies[];
+  addHobby: (hobbies: hobby) => void;
+  fetchHobbies: (hobbyList: hobby[]) => void;
+  hobbyList: hobby[];
   deleteHobby: (hobbyName: string) => void;
 }
 
@@ -22,14 +22,14 @@ interface State {
   userId: number;
   passionLevel: string;
   hobbyName: string;
-  year: number;
+  year: string;
 }
 
 const initialState = {
   userId: 0,
   passionLevel: "Low",
   hobbyName: "",
-  year: new Date().getFullYear()
+  year: ""
 };
 
 export class HobbiesList extends React.Component<Props, State> {
@@ -42,7 +42,6 @@ export class HobbiesList extends React.Component<Props, State> {
     const { fetchHobbies } = this.props;
     getData("http://localhost:3001/HobbyList").then((response: any) => {
       fetchHobbies(response.data);
-      //console.log(response.data);
     });
   }
 
@@ -55,14 +54,14 @@ export class HobbiesList extends React.Component<Props, State> {
   };
 
   handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ year: parseInt(e.target.value) });
+    this.setState({ year: e.target.value });
   };
 
   addNewHobby = (
     userId: number,
     passionLevel: string,
     hobbyName: string,
-    year: number
+    year: string
   ) => {
     const { addHobby } = this.props;
     if (hobbyName && year) {
@@ -77,7 +76,7 @@ export class HobbiesList extends React.Component<Props, State> {
   };
 
   render() {
-    const filterHobbyList = (hobbyList: hobbies[], userId: number) => {
+    const filterHobbyList = (hobbyList: hobby[], userId: number) => {
       return hobbyList.filter(hobby => hobby.userId === userId);
     };
 
@@ -159,7 +158,7 @@ export class HobbiesList extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: MyStore) => {
+const mapStateToProps = (state: Store) => {
   const { isHobbiesPanelActive, activeUserId, hobbyList } = state;
   return {
     isHobbiesPanelActive,

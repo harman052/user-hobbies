@@ -3,8 +3,13 @@ import { shallow } from "enzyme";
 import { UserList } from "./UserList";
 
 const props = {
-  userList: ["Sindy", "John", "Joe"],
+  userList: [
+    { userId: 1, name: "Sindy" },
+    { userId: 2, name: "John" },
+    { userId: 3, name: "Joe" }
+  ],
   addUser: jest.fn(),
+  fetchUsers: jest.fn(),
   activateHobbiesPanel: jest.fn(),
   isHobbiesPanelActive: false,
   activeUserId: 0,

@@ -1,5 +1,4 @@
-import { AddUser, FetchUsers } from "../actions/index";
-import { user } from "../../types";
+import { AddUser, FetchUsers, user } from "../../types";
 import * as actionTypes from "../actions/actionTypes";
 
 const userList = (state: user[] = [], action: AddUser | FetchUsers) => {

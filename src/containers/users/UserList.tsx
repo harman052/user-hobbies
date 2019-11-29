@@ -2,16 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import EmptyList from "../components/EmptyList";
-import messages from "../config/messages";
-import { MyStore, user } from "../types/index";
-import getData from "../api/apiUtils";
+import { Store, user } from "../../types";
+import getData from "../../api/apiUtils";
 import {
   addUser,
   fetchUsers,
   activateHobbiesPanel,
   setActiveUserId
-} from "../store/actions/index";
+} from "../../store/actions";
 import "./styles.scss";
 
 interface Props {
@@ -75,8 +73,6 @@ export class UserList extends React.Component<Props, State> {
   render() {
     const { text } = this.state;
     const { userList, activeUserId } = this.props;
-    console.log(userList);
-    const { emptyUserList } = messages;
     return (
       <div className="user-col">
         <div className="user-input-section">
@@ -93,8 +89,8 @@ export class UserList extends React.Component<Props, State> {
           </button>
         </div>
         <div className="user-list">
-          {userList.length > 0 ? (
-            userList.map((user, index) => (
+          {userList &&
+            userList.map(user => (
               <div
                 className={
                   activeUserId === user.userId
@@ -106,17 +102,14 @@ export class UserList extends React.Component<Props, State> {
               >
                 {user.name}
               </div>
-            ))
-          ) : (
-            <EmptyList className="empty-user-list" message={emptyUserList} />
-          )}
+            ))}
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: MyStore) => {
+const mapStateToProps = (state: Store) => {
   const { userList, isHobbiesPanelActive, activeUserId } = state;
   return {
     userList,

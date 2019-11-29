@@ -1,4 +1,4 @@
-import { ActivateHobbiesPanel } from "../actions/index";
+import { ActivateHobbiesPanel } from "../../types";
 import * as actionTypes from "../actions/actionTypes";
 
 const isHobbiesPanelActive = (

@@ -6,8 +6,9 @@ const props = {
   isHobbiesPanelActive: true,
   activeUserId: 1,
   addHobby: jest.fn(),
+  fetchHobbies: jest.fn(),
   hobbyList: [
-    { userId: 1, passionLevel: "Medium", hobbyName: "hiking", year: 2019 }
+    { userId: 1, passionLevel: "Medium", hobbyName: "hiking", year: "2019" }
   ],
   deleteHobby: jest.fn()
 };
