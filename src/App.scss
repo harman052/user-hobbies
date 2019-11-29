@@ -1,21 +1,23 @@
-.App {
-  text-align: center;
+@import "./styles/colors.scss";
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.heading {
+  color: lighten($color-text, 20%);
 }
 
-.App-header {
-  background-color: #282c34;
+.app-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+  color: $color-text;
+  width: 90vw;
+  border: 4px solid lighten($color-text, 40%);
+  border-radius: 8px;
 }

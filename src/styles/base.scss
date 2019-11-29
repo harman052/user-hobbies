@@ -1,0 +1,50 @@
+@import "./colors.scss";
+@import "./mixins.scss";
+
+$padding-boundary: 12px;
+$space-between-elements: 5px;
+
+input,
+select {
+  @include input($color-secondary);
+}
+
+button {
+  @include button($color-primary);
+}
+
+.col {
+  flex-grow: 0;
+  height: 80vh;
+}
+
+.input-section {
+  padding: $padding-boundary;
+  background-color: $color-bg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  label,
+  input,
+  select {
+    @include element-right-spaceing($space-between-elements);
+  }
+}
+
+.list {
+}
+
+.list-item {
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    background-color: $color-secondary;
+  }
+}
+
+.empty-list {
+  text-align: center;
+  padding-top: 50px;
+}

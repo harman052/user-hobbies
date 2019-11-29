@@ -1,5 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import EmptyList from "../components/EmptyList";
+import messages from "../config/messages";
 import { MyStore } from "../types/index";
 import {
   addUser,
@@ -13,6 +17,7 @@ interface Props {
   addUser: (newUser: string) => void;
   activateHobbiesPanel: (activationFlag: boolean) => void;
   isHobbiesPanelActive: boolean;
+  activeUserId: number;
   setActiveUserId: (userId: number) => void;
 }
 
@@ -28,10 +33,14 @@ class UserList extends React.Component<Props, State> {
     };
   }
   addUser = () => {
-    this.props.addUser(this.state.text);
-    this.setState({
-      text: ""
-    });
+    const { addUser } = this.props;
+    const { text } = this.state;
+    if (text) {
+      addUser(this.state.text);
+      this.setState({
+        text: ""
+      });
+    }
   };
 
   selectUser = (userId: number) => {
@@ -40,10 +49,6 @@ class UserList extends React.Component<Props, State> {
       this.props.activateHobbiesPanel(true);
     }
     this.props.setActiveUserId(userId);
-    // this.setState({
-    //   // activateHobbiesPanel: true,
-    //   activeUserId: userId
-    // });
   };
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,49 +59,45 @@ class UserList extends React.Component<Props, State> {
   };
 
   render() {
-    // const {
-    //   text,
-    //   userList,
-    //   handleChange,
-    //   addUser,
-    //   selectUser
-    // }: {
-    //   text: string;
-    //   userList: string[];
-    //   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    //   addUser: () => void;
-    //   selectUser: (activeUserId: number) => void;
-    // } = this.props;
-
     const { text }: { text: string } = this.state;
-    const { userList }: { userList: string[] } = this.props;
-
+    const {
+      userList,
+      activeUserId
+    }: { userList: string[]; activeUserId: number } = this.props;
+    const { emptyUserList } = messages;
     return (
       <div className="user-col">
-        <div>
-          <label>
-            Enter name
-            <input
-              type="text"
-              name="user-name"
-              value={text}
-              onChange={e => this.handleChange(e)}
-            />
-          </label>
+        <div className="user-input-section">
+          <label>Enter user name</label>
+          <input
+            type="text"
+            name="user-name"
+            value={text}
+            onChange={e => this.handleChange(e)}
+            placeholder="e.g. Bobby"
+          />
           <button type="submit" onClick={() => this.addUser()}>
-            Add
+            Add User <FontAwesomeIcon icon={faUserPlus} />
           </button>
         </div>
         <div className="user-list">
-          {userList.map((user, index) => (
-            <div
-              className="user-name-instance"
-              key={index}
-              onClick={() => this.selectUser(index + 1)}
-            >
-              {user}
-            </div>
-          ))}
+          {userList.length > 0 ? (
+            userList.map((user, index) => (
+              <div
+                className={
+                  activeUserId === index + 1
+                    ? "user-name-instance active-user"
+                    : "user-name-instance"
+                }
+                key={index}
+                onClick={() => this.selectUser(index + 1)}
+              >
+                {user}
+              </div>
+            ))
+          ) : (
+            <EmptyList className="empty-user-list" message={emptyUserList} />
+          )}
         </div>
       </div>
     );
@@ -104,10 +105,11 @@ class UserList extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: MyStore) => {
-  const { userList, isHobbiesPanelActive } = state;
+  const { userList, isHobbiesPanelActive, activeUserId } = state;
   return {
     userList,
-    isHobbiesPanelActive
+    isHobbiesPanelActive,
+    activeUserId
   };
 };
 

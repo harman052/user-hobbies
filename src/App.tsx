@@ -9,8 +9,9 @@ interface State {}
 class App extends React.Component<Props, State> {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
+      <div className="app">
+        <h1 className="heading">User hobbies</h1>
+        <div className="app-container">
           <UserList />
           <HobbiesList />
         </div>

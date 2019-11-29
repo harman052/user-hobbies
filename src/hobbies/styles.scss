@@ -1,6 +1,14 @@
+@import "../styles/base.scss";
+@import "../styles/mixins.scss";
+@import "../styles/colors.scss";
+
 .hobbies-col {
+  @extend .col;
   flex-grow: 3;
-  min-height: 100vh;
+}
+
+.hobby-input-section {
+  @extend .input-section;
 }
 
 .show-hobbies-list {
@@ -11,7 +19,21 @@
   display: none;
 }
 
+.hobby-list {
+}
+
+.hobby-instance {
+  @extend .list-item;
+  cursor: default;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.empty-hobby-list {
+  @extend .empty-list;
+}
+
 .delete-hobby {
-  color: red;
+  color: $color-danger;
   cursor: pointer;
 }

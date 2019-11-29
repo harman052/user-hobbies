@@ -1,5 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faSnowboarding } from "@fortawesome/free-solid-svg-icons";
+import EmptyList from "../components/EmptyList";
+import messages from "../config/messages";
 import { MyStore, hobbies } from "../types/index";
 import { addHobby, deleteHobby } from "../store/actions/index";
 import "./styles.scss";
@@ -7,12 +11,6 @@ import "./styles.scss";
 interface Props {
   isHobbiesPanelActive: boolean;
   activeUserId: number;
-  // addHobby: (
-  //   userId: number,
-  //   passionLevel: string,
-  //   hobbyName: string,
-  //   year: number
-  // ) => void;
   addHobby: (hobbies: hobbies) => void;
   hobbyList: hobbies[];
   deleteHobby: (hobbyName: string) => void;
@@ -25,31 +23,18 @@ interface State {
   year: number;
 }
 
+const initialState = {
+  userId: 0,
+  passionLevel: "Low",
+  hobbyName: "",
+  year: new Date().getFullYear()
+};
+
 class HobbiesList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      userId: 0,
-      passionLevel: "",
-      hobbyName: "",
-      year: 0
-    };
+    this.state = initialState;
   }
-
-  deleteHobby = (hobbyName: string) => {
-    // const userConfirmation = window.confirm(
-    //   "Are you sure you want to delete hobby?"
-    // );
-    // if (!userConfirmation) {
-    //   return;
-    // }
-    // let hobbies = this.state.hobbies;
-    // const index = hobbies.findIndex(hobby => hobby.hobbyName === hobbyName);
-    // if (index > -1) {
-    //   hobbies.splice(index, 1);
-    //   this.setState({ hobbies });
-    // }
-  };
 
   handleHobbyName = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ hobbyName: e.target.value });
@@ -63,73 +48,96 @@ class HobbiesList extends React.Component<Props, State> {
     this.setState({ year: parseInt(e.target.value) });
   };
 
+  addNewHobby = (
+    userId: number,
+    passionLevel: string,
+    hobbyName: string,
+    year: number
+  ) => {
+    const { addHobby } = this.props;
+    if (hobbyName && year) {
+      addHobby({
+        userId,
+        passionLevel,
+        hobbyName,
+        year
+      });
+      this.setState(initialState);
+    }
+  };
+
   render() {
     const {
       isHobbiesPanelActive,
       activeUserId: userId,
-      addHobby,
       deleteHobby,
       hobbyList
     } = this.props;
     const { passionLevel, hobbyName, year } = this.state;
+    const { emptyHobbyList } = messages;
     return (
       <div className="hobbies-col">
         <div
           className={
-            isHobbiesPanelActive ? "show-hobbies-list" : "hide-hobbies-list"
+            isHobbiesPanelActive ? "hobby-input-section" : "hide-hobbies-list"
           }
         >
-          <label>
-            Passion level
-            <select
-              name="passionLevel"
-              onChange={e => this.handlePassionLevel(e)}
-            >
-              <option>Low</option>
-              <option>Medium</option>
-              <option>High</option>
-            </select>
-          </label>{" "}
-          <label>
-            Enter hobby
-            <input
-              type="text"
-              name="hobbyName"
-              onChange={e => this.handleHobbyName(e)}
-            />
-          </label>{" "}
-          <label>
-            Enter year
-            <input type="text" name="year" onChange={e => this.handleYear(e)} />
-          </label>{" "}
+          <label>Passion level</label>
+          <select
+            name="passionLevel"
+            onChange={e => this.handlePassionLevel(e)}
+          >
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+          </select>
+
+          <label>Enter hobby</label>
+          <input
+            type="text"
+            name="hobbyName"
+            value={hobbyName}
+            onChange={e => this.handleHobbyName(e)}
+            placeholder="e.g. hiking"
+          />
+
+          <label>Enter year</label>
+          <input
+            type="number"
+            name="year"
+            value={year}
+            placeholder="e.g. 2019"
+            onChange={e => this.handleYear(e)}
+          />
           <button
             type="submit"
             onClick={() =>
-              addHobby({
-                userId,
-                passionLevel,
-                hobbyName,
-                year
-              })
+              this.addNewHobby(userId, passionLevel, hobbyName, year)
             }
           >
-            Add
+            Add Hobby <FontAwesomeIcon icon={faSnowboarding} />
           </button>
-          {hobbyList &&
+        </div>
+        <div className="hobby-list">
+          {hobbyList.length > 0 ? (
             hobbyList
               .filter(hobby => hobby.userId === userId)
               .map((hobby, index) => (
-                <div key={index}>
-                  {hobby.userId} {hobby.hobbyName} {hobby.passionLevel}{" "}
-                  {hobby.year} {""}
+                <div key={index} className="hobby-instance">
+                  <span>{hobby.passionLevel}</span>
+                  <span>{hobby.hobbyName}</span>
+                  <span>Since {hobby.year}</span>
                   <span
                     className="delete-hobby"
                     onClick={() => deleteHobby(hobby.hobbyName)}
                   >
-                    Delete
+                    Delete <FontAwesomeIcon icon={faTrashAlt} />
                   </span>
                 </div>
-              ))}
+              ))
+          ) : (
+            <EmptyList className="empty-hobby-list" message={emptyHobbyList} />
+          )}
         </div>
       </div>
     );

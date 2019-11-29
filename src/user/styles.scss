@@ -1,13 +1,25 @@
+@import "../styles/colors.scss";
+@import "../styles/base.scss";
+@import "../styles/mixins.scss";
+
 .user-col {
+  @extend .col;
+  border-right: 4px solid lighten($color-text, 40%);
   flex-grow: 2;
-  min-height: 100vh;
-  border-right: 2px solid white;
+}
+
+.user-input-section {
+  @extend .input-section;
 }
 
 .user-name-instance {
-  padding: 10px;
-  background: black;
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  cursor: pointer;
+  @extend .list-item;
+}
+
+.active-user {
+  background-color: lighten($color-primary, 40%);
+}
+
+.empty-user-list {
+  @extend .empty-list;
 }
