@@ -4,17 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import EmptyList from "../components/EmptyList";
 import messages from "../config/messages";
-import { MyStore } from "../types/index";
+import { MyStore, user } from "../types/index";
+import getData from "../api/apiUtils";
 import {
   addUser,
+  fetchUsers,
   activateHobbiesPanel,
   setActiveUserId
 } from "../store/actions/index";
 import "./styles.scss";
 
 interface Props {
-  userList: string[];
-  addUser: (newUser: string) => void;
+  userList: user[];
+  addUser: (newUser: user) => void;
+  fetchUsers: (userList: user[]) => void;
   activateHobbiesPanel: (activationFlag: boolean) => void;
   isHobbiesPanelActive: boolean;
   activeUserId: number;
@@ -25,18 +28,30 @@ interface State {
   text: string;
 }
 
-class UserList extends React.Component<Props, State> {
+export class UserList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       text: ""
     };
   }
+
+  componentDidMount() {
+    const { fetchUsers } = this.props;
+    getData("http://localhost:3001/UserList").then((response: any) =>
+      fetchUsers(response.data)
+    );
+  }
+
   addUser = () => {
-    const { addUser } = this.props;
+    const { addUser, userList } = this.props;
     const { text } = this.state;
     if (text) {
-      addUser(this.state.text);
+      const newUser = {
+        userId: userList.length + 1,
+        name: text
+      };
+      addUser(newUser);
       this.setState({
         text: ""
       });
@@ -44,7 +59,6 @@ class UserList extends React.Component<Props, State> {
   };
 
   selectUser = (userId: number) => {
-    console.log("userId: ", userId);
     if (!this.props.isHobbiesPanelActive) {
       this.props.activateHobbiesPanel(true);
     }
@@ -59,11 +73,9 @@ class UserList extends React.Component<Props, State> {
   };
 
   render() {
-    const { text }: { text: string } = this.state;
-    const {
-      userList,
-      activeUserId
-    }: { userList: string[]; activeUserId: number } = this.props;
+    const { text } = this.state;
+    const { userList, activeUserId } = this.props;
+    console.log(userList);
     const { emptyUserList } = messages;
     return (
       <div className="user-col">
@@ -85,14 +97,14 @@ class UserList extends React.Component<Props, State> {
             userList.map((user, index) => (
               <div
                 className={
-                  activeUserId === index + 1
+                  activeUserId === user.userId
                     ? "user-name-instance active-user"
                     : "user-name-instance"
                 }
-                key={index}
-                onClick={() => this.selectUser(index + 1)}
+                key={user.userId}
+                onClick={() => this.selectUser(user.userId)}
               >
-                {user}
+                {user.name}
               </div>
             ))
           ) : (
@@ -116,7 +128,8 @@ const mapStateToProps = (state: MyStore) => {
 const mapDispatchToProps = {
   addUser,
   activateHobbiesPanel,
-  setActiveUserId
+  setActiveUserId,
+  fetchUsers
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserList);

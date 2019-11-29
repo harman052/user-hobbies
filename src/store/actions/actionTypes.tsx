@@ -7,6 +7,12 @@ export type ADD_HOBBY = typeof ADD_HOBBY;
 export const DELETE_HOBBY = "DELETE_HOBBY";
 export type DELETE_HOBBY = typeof DELETE_HOBBY;
 
+export const FETCH_USERS = "FETCH_USERS";
+export type FETCH_USERS = typeof FETCH_USERS;
+
+export const FETCH_HOBBIES = "FETCH_HOBBIES";
+export type FETCH_HOBBIES = typeof FETCH_HOBBIES;
+
 export const ACTIVATE_HOBBIES_PANEL = "ACTIVATE_HOBBIES_PANEL";
 export type ACTIVATE_HOBBIES_PANEL = typeof ACTIVATE_HOBBIES_PANEL;
 

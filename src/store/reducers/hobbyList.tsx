@@ -1,14 +1,17 @@
-import { AddHobby, DeleteHobby } from "../actions/index";
+import { AddHobby, DeleteHobby, FetchHobbies } from "../actions/index";
 import { hobbies } from "../../types/index";
 import * as actionTypes from "../actions/actionTypes";
 
 const hobbyList = (
   state: hobbies[] = [],
-  action: AddHobby | DeleteHobby
+  action: AddHobby | DeleteHobby | FetchHobbies
 ): hobbies[] => {
   switch (action.type) {
     case actionTypes.ADD_HOBBY: {
       return [...state, action.payload];
+    }
+    case actionTypes.FETCH_HOBBIES: {
+      return [...action.payload];
     }
     case actionTypes.DELETE_HOBBY: {
       const userConfirmation = window.confirm(

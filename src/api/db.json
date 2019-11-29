@@ -1,0 +1,65 @@
+{
+  "userList": [
+    { "name": "Enola", "userId": 1 },
+    { "name": "Liam", "userId": 2 },
+    { "name": "Brionna", "userId": 3 },
+    { "name": "Rolando", "userId": 4 },
+    { "name": "Joe", "userId": 5 }
+  ],
+  "hobbyList": [
+    {
+      "userId": 1,
+      "passionLevel": "Low",
+      "hobbyName": "Hiking",
+      "year": "2009"
+    },
+    {
+      "userId": 1,
+      "passionLevel": "Low",
+      "hobbyName": "Singing",
+      "year": "2019"
+    },
+    {
+      "userId": 1,
+      "passionLevel": "Medium",
+      "hobbyName": "Cycling",
+      "year": "2018"
+    },
+    {
+      "userId": 2,
+      "passionLevel": "High",
+      "hobbyName": "Book reading",
+      "year": "20011"
+    },
+    {
+      "userId": 2,
+      "passionLevel": "Low",
+      "hobbyName": "Guitar",
+      "year": "2017"
+    },
+    {
+      "userId": 3,
+      "passionLevel": "Medium",
+      "hobbyName": "Horse riding",
+      "year": "1999"
+    },
+    {
+      "userId": 3,
+      "passionLevel": "High",
+      "hobbyName": "Fishing",
+      "year": "2005"
+    },
+    {
+      "userId": 3,
+      "passionLevel": "Low",
+      "hobbyName": "Badminton",
+      "year": "2019"
+    },
+    {
+      "userId": 5,
+      "passionLevel": "Medium",
+      "hobbyName": "Cooking",
+      "year": "2006"
+    }
+  ]
+}

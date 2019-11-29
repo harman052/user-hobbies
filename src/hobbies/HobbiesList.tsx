@@ -5,13 +5,15 @@ import { faTrashAlt, faSnowboarding } from "@fortawesome/free-solid-svg-icons";
 import EmptyList from "../components/EmptyList";
 import messages from "../config/messages";
 import { MyStore, hobbies } from "../types/index";
-import { addHobby, deleteHobby } from "../store/actions/index";
+import { addHobby, deleteHobby, fetchHobbies } from "../store/actions/index";
+import getData from "../api/apiUtils";
 import "./styles.scss";
 
 interface Props {
   isHobbiesPanelActive: boolean;
   activeUserId: number;
   addHobby: (hobbies: hobbies) => void;
+  fetchHobbies: (hobbyList: hobbies[]) => void;
   hobbyList: hobbies[];
   deleteHobby: (hobbyName: string) => void;
 }
@@ -30,10 +32,18 @@ const initialState = {
   year: new Date().getFullYear()
 };
 
-class HobbiesList extends React.Component<Props, State> {
+export class HobbiesList extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = initialState;
+  }
+
+  componentDidMount() {
+    const { fetchHobbies } = this.props;
+    getData("http://localhost:3001/HobbyList").then((response: any) => {
+      fetchHobbies(response.data);
+      //console.log(response.data);
+    });
   }
 
   handleHobbyName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,7 +165,8 @@ const mapStateToProps = (state: MyStore) => {
 
 const mapDispatchToProps = {
   addHobby,
-  deleteHobby
+  deleteHobby,
+  fetchHobbies
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HobbiesList);

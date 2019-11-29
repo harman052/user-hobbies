@@ -2,7 +2,7 @@ import { ActivateHobbiesPanel } from "../actions/index";
 import * as actionTypes from "../actions/actionTypes";
 
 const isHobbiesPanelActive = (
-  state: boolean = true,
+  state: boolean = false,
   action: ActivateHobbiesPanel
 ) => {
   switch (action.type) {

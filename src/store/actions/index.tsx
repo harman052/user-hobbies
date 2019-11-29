@@ -1,4 +1,5 @@
 import * as actionTypes from "./actionTypes";
+import { user } from "../../types";
 import { hobbies } from "../../types/index";
 
 //define action interfaces
@@ -14,7 +15,7 @@ export interface SetActiveUserId {
 
 export interface AddUser {
   type: actionTypes.ADD_USER;
-  payload: string;
+  payload: user;
 }
 
 export interface AddHobby {
@@ -25,6 +26,15 @@ export interface AddHobby {
 export interface DeleteHobby {
   type: actionTypes.DELETE_HOBBY;
   payload: string;
+}
+
+export interface FetchUsers {
+  type: actionTypes.FETCH_USERS;
+  payload: user[];
+}
+export interface FetchHobbies {
+  type: actionTypes.FETCH_HOBBIES;
+  payload: hobbies[];
 }
 
 //define actions
@@ -40,7 +50,7 @@ export const setActiveUserId = (activeUserId: number): SetActiveUserId => ({
   payload: activeUserId
 });
 
-export const addUser = (newUser: string): AddUser => ({
+export const addUser = (newUser: user): AddUser => ({
   type: actionTypes.ADD_USER,
   payload: newUser
 });
@@ -53,4 +63,14 @@ export const addHobby = (hobby: hobbies): AddHobby => ({
 export const deleteHobby = (hobbyName: string): DeleteHobby => ({
   type: actionTypes.DELETE_HOBBY,
   payload: hobbyName
+});
+
+export const fetchUsers = (userList: user[]): FetchUsers => ({
+  type: actionTypes.FETCH_USERS,
+  payload: userList
+});
+
+export const fetchHobbies = (hobbiesList: hobbies[]): FetchHobbies => ({
+  type: actionTypes.FETCH_HOBBIES,
+  payload: hobbiesList
 });

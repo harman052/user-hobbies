@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import isHobbiesPanelActive from "./isHobbiesPanelActive";
-import userList from "./addUser";
+import userList from "./userList";
 import hobbyList from "./hobbyList";
 import activeUserId from "./activeUserId";
 
