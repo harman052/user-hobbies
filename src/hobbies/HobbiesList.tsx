@@ -1,22 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
+import { MyStore, hobbies } from "../types/index";
+import { addHobby, deleteHobby } from "../store/actions/index";
 import "./styles.scss";
 
-interface hobbies {
-  userId: number;
-  passionLevel: string;
-  hobbyName: string;
-  year: number;
-}
-
 interface Props {
-  activate: boolean;
+  isHobbiesPanelActive: boolean;
   activeUserId: number;
-  addHobby: (
-    userId: number,
-    passionLevel: string,
-    hobbyName: string,
-    year: number
-  ) => void;
+  // addHobby: (
+  //   userId: number,
+  //   passionLevel: string,
+  //   hobbyName: string,
+  //   year: number
+  // ) => void;
+  addHobby: (hobbies: hobbies) => void;
   hobbyList: hobbies[];
   deleteHobby: (hobbyName: string) => void;
 }
@@ -39,6 +36,21 @@ class HobbiesList extends React.Component<Props, State> {
     };
   }
 
+  deleteHobby = (hobbyName: string) => {
+    // const userConfirmation = window.confirm(
+    //   "Are you sure you want to delete hobby?"
+    // );
+    // if (!userConfirmation) {
+    //   return;
+    // }
+    // let hobbies = this.state.hobbies;
+    // const index = hobbies.findIndex(hobby => hobby.hobbyName === hobbyName);
+    // if (index > -1) {
+    //   hobbies.splice(index, 1);
+    //   this.setState({ hobbies });
+    // }
+  };
+
   handleHobbyName = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ hobbyName: e.target.value });
   };
@@ -52,11 +64,19 @@ class HobbiesList extends React.Component<Props, State> {
   };
 
   render() {
+    const {
+      isHobbiesPanelActive,
+      activeUserId: userId,
+      addHobby,
+      deleteHobby,
+      hobbyList
+    } = this.props;
+    const { passionLevel, hobbyName, year } = this.state;
     return (
       <div className="hobbies-col">
         <div
           className={
-            this.props.activate ? "show-hobbies-list" : "hide-hobbies-list"
+            isHobbiesPanelActive ? "show-hobbies-list" : "hide-hobbies-list"
           }
         >
           <label>
@@ -85,31 +105,49 @@ class HobbiesList extends React.Component<Props, State> {
           <button
             type="submit"
             onClick={() =>
-              this.props.addHobby(
-                this.props.activeUserId,
-                this.state.passionLevel,
-                this.state.hobbyName,
-                this.state.year
-              )
+              addHobby({
+                userId,
+                passionLevel,
+                hobbyName,
+                year
+              })
             }
           >
             Add
           </button>
-          {this.props.hobbyList
-            .filter(hobby => hobby.userId === this.props.activeUserId)
-            .map((hobby, index) => (
-              <div key={index}>
-                {hobby.userId} {hobby.hobbyName} {hobby.passionLevel}{" "}
-                {hobby.year} {""}
-                <span onClick={() => this.props.deleteHobby(hobby.hobbyName)}>
-                  Delete
-                </span>
-              </div>
-            ))}
+          {hobbyList &&
+            hobbyList
+              .filter(hobby => hobby.userId === userId)
+              .map((hobby, index) => (
+                <div key={index}>
+                  {hobby.userId} {hobby.hobbyName} {hobby.passionLevel}{" "}
+                  {hobby.year} {""}
+                  <span
+                    className="delete-hobby"
+                    onClick={() => deleteHobby(hobby.hobbyName)}
+                  >
+                    Delete
+                  </span>
+                </div>
+              ))}
         </div>
       </div>
     );
   }
 }
 
-export default HobbiesList;
+const mapStateToProps = (state: MyStore) => {
+  const { isHobbiesPanelActive, activeUserId, hobbyList } = state;
+  return {
+    isHobbiesPanelActive,
+    activeUserId,
+    hobbyList
+  };
+};
+
+const mapDispatchToProps = {
+  addHobby,
+  deleteHobby
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HobbiesList);
