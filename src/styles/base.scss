@@ -13,10 +13,6 @@ button {
   @include button($color-primary);
 }
 
-.col {
-  flex-grow: 0;
-}
-
 .input-section {
   padding: $padding-boundary;
   background-color: $color-bg;

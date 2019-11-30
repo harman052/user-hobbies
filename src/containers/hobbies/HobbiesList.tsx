@@ -54,7 +54,9 @@ export class HobbiesList extends React.Component<Props, State> {
   };
 
   handleYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ year: e.target.value });
+    if (e.target.value.length <= 4) {
+      this.setState({ year: e.target.value });
+    }
   };
 
   addNewHobby = (
@@ -96,41 +98,44 @@ export class HobbiesList extends React.Component<Props, State> {
             isHobbiesPanelActive ? "hobby-input-section" : "hide-hobbies-list"
           }
         >
-          <label>Passion level</label>
-          <select
-            name="passionLevel"
-            onChange={e => this.handlePassionLevel(e)}
-          >
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
-          </select>
+          <div className="input-row">
+            <label>Passion level</label>
+            <select
+              name="passionLevel"
+              onChange={e => this.handlePassionLevel(e)}
+            >
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
 
-          <label>Enter hobby</label>
-          <input
-            type="text"
-            name="hobbyName"
-            value={hobbyName}
-            onChange={e => this.handleHobbyName(e)}
-            placeholder="e.g. hiking"
-          />
-
-          <label>Enter year</label>
-          <input
-            type="number"
-            name="year"
-            value={year}
-            placeholder="e.g. 2019"
-            onChange={e => this.handleYear(e)}
-          />
-          <button
-            type="submit"
-            onClick={() =>
-              this.addNewHobby(userId, passionLevel, hobbyName, year)
-            }
-          >
-            Add Hobby <FontAwesomeIcon icon={faSnowboarding} />
-          </button>
+            <label>Enter hobby</label>
+            <input
+              type="text"
+              name="hobbyName"
+              value={hobbyName}
+              onChange={e => this.handleHobbyName(e)}
+              placeholder="e.g. hiking"
+            />
+          </div>
+          <div className="input-row">
+            <label>Enter year</label>
+            <input
+              type="number"
+              name="year"
+              value={year}
+              placeholder="e.g. 2019"
+              onChange={e => this.handleYear(e)}
+            />
+            <button
+              type="submit"
+              onClick={() =>
+                this.addNewHobby(userId, passionLevel, hobbyName, year)
+              }
+            >
+              Add Hobby <FontAwesomeIcon icon={faSnowboarding} />
+            </button>
+          </div>
         </div>
         <div className="hobby-list">
           {filteredHobbyList && filteredHobbyList.length > 0 ? (

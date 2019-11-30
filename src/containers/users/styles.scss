@@ -3,7 +3,6 @@
 @import "../../styles/mixins.scss";
 
 .user-col {
-  @extend .col;
   width: 600px;
   border-right: 4px solid lighten($color-text, 40%);
 }
@@ -26,4 +25,22 @@
 
 .empty-user-list {
   @extend .empty-list;
+}
+
+// media queries
+@media (max-width: 1350px) {
+  .user-input-section {
+    justify-content: space-between;
+    align-items: center;
+    height: 112px;
+  }
+}
+
+@media (max-width: 900px) {
+  .user-input-section {
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    height: 112px;
+  }
 }
