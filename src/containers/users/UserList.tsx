@@ -57,10 +57,15 @@ export class UserList extends React.Component<Props, State> {
   };
 
   selectUser = (userId: number) => {
-    if (!this.props.isHobbiesPanelActive) {
-      this.props.activateHobbiesPanel(true);
+    const {
+      isHobbiesPanelActive,
+      activateHobbiesPanel,
+      setActiveUserId
+    } = this.props;
+    if (!isHobbiesPanelActive) {
+      activateHobbiesPanel(true);
     }
-    this.props.setActiveUserId(userId);
+    setActiveUserId(userId);
   };
 
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
